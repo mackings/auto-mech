@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "69187023340",
+    "project_id": "automech-23b61",
+    "storage_bucket": "automech-23b61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69187023340:android:7d5bc10d62ffa3eaf390c9",
+        "android_client_info": {
+          "package_name": "com.example.auto_mech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69187023340-fneldvoe10im872u4cf5jpg15ucq5slo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWPQpX9z_VsRP2f-rekF-2G-7FYE4p2go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69187023340-fneldvoe10im872u4cf5jpg15ucq5slo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

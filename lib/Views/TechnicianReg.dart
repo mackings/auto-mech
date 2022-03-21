@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:auto_mech/Auths/authentications.dart';
 import 'package:auto_mech/Views/Home.dart';
 import 'package:auto_mech/Views/Signin.dart';
+import 'package:auto_mech/Views/Techniciandashboard.dart';
+import 'package:auto_mech/Views/Technicianlogin.dart';
 
 import 'package:auto_mech/Views/Technicianslist.dart';
 import 'package:auto_mech/Widgets/widgets.dart';
@@ -65,8 +67,8 @@ class _TechRegState extends State<TechReg> {
         //AddTechniciantodb();
         Addtowaitlist();
         mailAdmin();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home()));
+        //Navigator.push(context,
+        // MaterialPageRoute(builder: (context) => const TechDashboard()));
       } else {
         Fluttertoast.showToast(
             msg: "User Creation Failed",
@@ -308,6 +310,34 @@ class _TechRegState extends State<TechReg> {
                               ),
                               child: Center(
                                 child: Text('Register',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontFamily: 'candal',
+                                    )),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              //RegisterTechnician();
+                              // LogTechnicianin();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=> TechLogin()));
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 190,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text('Login',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

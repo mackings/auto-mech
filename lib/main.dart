@@ -1,4 +1,5 @@
 import 'package:auto_mech/Views/signup.dart';
+import 'package:auto_mech/Views/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Signup(),
+      home: Welcome(),
     );
   }
 }

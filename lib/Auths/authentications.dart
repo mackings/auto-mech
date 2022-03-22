@@ -20,6 +20,7 @@ TextEditingController phonePasswordController = TextEditingController();
 //login controllers
 TextEditingController emailloginController = TextEditingController();
 TextEditingController passwordloginController = TextEditingController();
+final Usermail = FirebaseAuth.instance.currentUser;
 
 
 
@@ -41,14 +42,14 @@ Future mailTechnician() async {
       headers: {
         'content-type': 'application/json',
         'x-rapidapi-host': 'easymail.p.rapidapi.com',
-        'x-rapidapi-key': 'b2041af5e7msh4c63771dabb3ed0p1d133ajsn92508e12e4a5'
+        'x-rapidapi-key': 'ec638319d1msh9464f65db7de373p1c26a9jsnee9a515c9b14'
       },
       //body
       body: jsonEncode({
         "from": "Admin@FastRepair",
-        "to": 'kolawolefolagadeeunice2019@gmail.com',
+        "to": 'kingsleyudoma2018@gmail.com',
         "subject": "Repair Request",
-        "message": "<h1>A user has requested a Repair</h1>"
+        "message": "<h1>A user ${Usermail!.email} has requested a Repair</h1>"
       }));
 
   if (response.statusCode == 200) {

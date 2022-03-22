@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auto_mech/Database Models/databasemodel.dart';
 import 'package:auto_mech/Database Models/Techniciansmodel.dart';
 import 'package:auto_mech/Auths/authentications.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Technicianslist extends StatefulWidget {
   const Technicianslist({Key? key}) : super(key: key);
@@ -16,14 +17,53 @@ class Technicianslist extends StatefulWidget {
 }
 
 class _TechnicianslistState extends State<Technicianslist> {
+  final Geolocator geolocator = Geolocator();
+  Position? _currentPosition;
+  LocationPermission? permission;
+  late String _currentAddress;
+  bool _serviceenabled = false;
+
+  Viewlocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+      forceAndroidLocationManager: true,
+      timeLimit: Duration(seconds: 20),
+    );
+    setState(() {
+      _currentPosition = position;
+    });
+
+    _serviceenabled = await Geolocator.isLocationServiceEnabled();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    } else {}
+
+    print(position);
+
+    //final address = await Geocoder.local.findAddressesFromCoordinates(
+    //   Coordinates(position.latitude, position.longitude));
+
+    //var first = address.first;
+    ////print(first.locality);
+    //print(first.adminArea);
+  }
+
+  reqpermission() async {
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        
           body: StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection('Technicians').snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('Technicians')
+                  .snapshots(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data.docs.length == 0) {
@@ -48,7 +88,7 @@ class _TechnicianslistState extends State<Technicianslist> {
                                       builder: (context) {
                                         return AlertDialog(
                                           title: Text(
-                                            'Are you sure you want to Call ${tecnics.name}?',
+                                            'Connect with ${tecnics.name}?',
                                             style:
                                                 TextStyle(fontFamily: 'candal'),
                                           ),
@@ -61,23 +101,46 @@ class _TechnicianslistState extends State<Technicianslist> {
                                               ),
                                               onPressed: () {
                                                 mailTechnician();
+                                                reqpermission();
                                                 Navigator.pop(context);
-                                                showDialog(context: context, builder: (context) {
-                                                  return AlertDialog(
-                                                    title: Text('Locating... ${tecnics.name}',style: TextStyle(fontFamily: 'candal'),),
-                                                    content: Text('${tecnics.name}s Team Would reach You Soon',style: TextStyle(fontFamily: 'candal'),),
-                                                    actions: [
-                                                      FlatButton(
-                                                        child: Text('Results',style: TextStyle(fontFamily: 'candal'),),
-                                                        onPressed: () {
-                                                         Navigator.push(context, MaterialPageRoute(builder: (context) => Mapscreen()));
-                                                        },
-                                                      )
-                                                    ],
-                                                    
-                                                  );
-                                                  
-                                                });
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                          'Locating... ${tecnics.name}',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'candal'),
+                                                        ),
+                                                        content: Text(
+                                                          '${tecnics.name} is being Contacted',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'candal'),
+                                                        ),
+                                                        actions: [
+                                                          FlatButton(
+                                                            child: Text(
+                                                              'Movements',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'candal'),
+                                                            ),
+                                                            onPressed: () {
+                                                              mailTechnician();
+                                                              
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              Mapscreen()));
+                                                            },
+                                                          )
+                                                        ],
+                                                      );
+                                                    });
                                               },
                                             ),
                                             FlatButton(
@@ -86,16 +149,14 @@ class _TechnicianslistState extends State<Technicianslist> {
                                                 style: TextStyle(
                                                     fontFamily: 'candal'),
                                               ),
-                                              onPressed: () {
-                                                
-                                              },
+                                              onPressed: () {},
                                             )
                                           ],
                                         );
                                       });
                                 },
                                 child: Container(
-                                  height: 130,
+                                  height: 150,
                                   width: MediaQuery.of(context).size.width - 40,
                                   decoration: BoxDecoration(
                                     color: Color(0xff35c343),
@@ -142,7 +203,17 @@ class _TechnicianslistState extends State<Technicianslist> {
                                                     fontFamily: 'candal',
                                                     color: Colors.white)),
                                           ),
-                                          Text('Location: ${tecnics.location}',
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                'Specification: ${tecnics.Specifications}',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: 'candal',
+                                                    color: Colors.white)),
+                                          ),
+                                          Text('Location: Fcah IB',
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.bold,

@@ -151,7 +151,7 @@ class _TechDashboardState extends State<TechDashboard> {
                       width: 30,
                     ),
                     Text(
-                      'Pending',
+                      'Approved',
                       style: TextStyle(fontSize: 15, fontFamily: 'candal'),
                     ),
                   ],

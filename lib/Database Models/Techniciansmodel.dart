@@ -7,9 +7,10 @@ class Tech {
   String email;
   String phone;
   String location;
+  String Specifications;
 
 
-  Tech({required this.name, required this.email, required this.phone , required this.location,});
+  Tech({required this.name, required this.email, required this.phone , required this.location, required this.Specifications});
 
   factory Tech.fromJson(DocumentSnapshot snapshot) {
     return Tech(
@@ -17,6 +18,7 @@ class Tech {
       email: snapshot['email'],
       phone: snapshot['Phone Number'],
       location: snapshot['location'],
+      Specifications: snapshot['Specifications'],
       
     );
   }

@@ -275,63 +275,9 @@ class _SignupState extends State<Signup> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text(
-                                "How do we Classify You ?",
-                                style: TextStyle(
-                                  fontFamily: 'candal',
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              content: Text(
-                                "Please select a Registration Type",
-                                style: TextStyle(
-                                  fontFamily: 'candal',
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              actions: [
-                                MaterialButton(
-                                  child: Text(
-                                    "Technician",
-                                    style: TextStyle(
-                                      fontFamily: 'candal',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TechReg()));
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text(
-                                    "Customer",
-                                    style: TextStyle(
-                                      fontFamily: 'candal',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    RegisterUser();
-                                    Addusertodb();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Signin()));
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                      //RegisterUser();
-                      //Addusertodb();
+                      
+                      RegisterUser();
+                      Addusertodb();
                     } else {
                       showDialog(
                           context: context,

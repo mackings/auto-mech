@@ -6,6 +6,7 @@ import 'package:auto_mech/Database Models/databasemodel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
+
 class Mapscreen extends StatefulWidget {
   const Mapscreen({Key? key}) : super(key: key);
 
@@ -22,30 +23,56 @@ class _MapscreenState extends State<Mapscreen> {
   }
 
   final Geolocator geolocator = Geolocator();
-  late Position _currentPosition;
+   Position? _currentPosition;
+  LocationPermission? permission;
   late String _currentAddress;
+  bool _serviceenabled = false;
 
   Viewlocation() async {
     Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      desiredAccuracy: LocationAccuracy.best,
       forceAndroidLocationManager: true,
-      timeLimit: Duration(seconds: 10),
+      timeLimit: Duration(seconds: 20),
     );
+    setState(() {
+      _currentPosition = position;
+    });
+
+    _serviceenabled = await Geolocator.isLocationServiceEnabled();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    } else {}
+
     print(position);
+
+
+
+    
+
+    //final address = await Geocoder.local.findAddressesFromCoordinates(
+     //   Coordinates(position.latitude, position.longitude));
+
+   //var first = address.first;
+    ////print(first.locality);
+    //print(first.adminArea);
+  }
+
+  reqpermission() async {
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    } else {}
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          child: GestureDetector(
-              onTap: () {
-                Viewlocation();
-              },
-              child: Center(child: Text('Hello'))),
-        ),
-      ),
+        body: GoogleMap(
+          initialCameraPosition: CameraPosition(target: _center, zoom: 15),)
+          ),
+      
     );
   }
 }

@@ -28,12 +28,12 @@ class _TechRegState extends State<TechReg> {
         headers: {
           'content-type': 'application/json',
           'x-rapidapi-host': 'easymail.p.rapidapi.com',
-          'x-rapidapi-key': 'b2041af5e7msh4c63771dabb3ed0p1d133ajsn92508e12e4a5'
+          'x-rapidapi-key': 'ec638319d1msh9464f65db7de373p1c26a9jsnee9a515c9b14'
         },
         //body
         body: jsonEncode({
           "from": "Admin@FastRepair",
-          "to": 'kolawolefolagadeeunice2019@gmail.com',
+          "to": 'kingsleyudoma2018@gmail.com',
           "subject": "Repair Request",
           "message": "<h1>Hello Admin, A Technician is on the Waitlist</h1>"
         }));
@@ -113,6 +113,16 @@ class _TechRegState extends State<TechReg> {
       'location': _addressController.text.trim(),
       'Phone Number': _phoneController.text.trim(),
     }).whenComplete(() => print('Data Added'));
+    mailAdmin();
+  }
+
+  Future MovetoTechlist() async {
+    await FirebaseFirestore.instance.collection('Technicians').doc().set({
+      'Username': _nameController.text.trim(),
+      'email': _emailController.text.trim(),
+      'location': _addressController.text.trim(),
+      'Phone Number': _phoneController.text.trim(),
+    }).whenComplete(() => print('Data Added'));
   }
 
   Future Addtowaitlist() async {
@@ -121,6 +131,7 @@ class _TechRegState extends State<TechReg> {
       'email': _emailController.text.trim(),
       'location': _addressController.text.trim(),
       'Phone Number': _phoneController.text.trim(),
+      'Specifications': _specificationsController.text.trim(),
     }).whenComplete(() => print('Data Added to Waitlist'));
   }
 
@@ -129,6 +140,7 @@ class _TechRegState extends State<TechReg> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
+  TextEditingController _specificationsController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -252,6 +264,30 @@ class _TechRegState extends State<TechReg> {
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: TextFormField(
+                              controller: _specificationsController,
+                              decoration: InputDecoration(
+                                labelText: 'Specification',
+                                labelStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontFamily: 'candal',
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your Specification';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TextFormField(
                               controller: _addressController,
                               decoration: InputDecoration(
                                 labelText: 'Location',
@@ -326,8 +362,10 @@ class _TechRegState extends State<TechReg> {
                             onTap: () {
                               //RegisterTechnician();
                               // LogTechnicianin();
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=> TechLogin()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TechLogin()));
                             },
                             child: Container(
                               height: 50,

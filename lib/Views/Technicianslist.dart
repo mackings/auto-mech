@@ -1,3 +1,4 @@
+import 'package:auto_mech/Views/Mapscreen.dart';
 import 'package:auto_mech/Widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:direct_dialer/direct_dialer.dart';
@@ -63,13 +64,13 @@ class _TechnicianslistState extends State<Technicianslist> {
                                                 Navigator.pop(context);
                                                 showDialog(context: context, builder: (context) {
                                                   return AlertDialog(
-                                                    title: Text('Calling ${tecnics.name}',style: TextStyle(fontFamily: 'candal'),),
+                                                    title: Text('Locating... ${tecnics.name}',style: TextStyle(fontFamily: 'candal'),),
                                                     content: Text('${tecnics.name}s Team Would reach You Soon',style: TextStyle(fontFamily: 'candal'),),
                                                     actions: [
                                                       FlatButton(
-                                                        child: Text('Ok',style: TextStyle(fontFamily: 'candal'),),
+                                                        child: Text('Results',style: TextStyle(fontFamily: 'candal'),),
                                                         onPressed: () {
-                                                          Navigator.pop(context);
+                                                         Navigator.push(context, MaterialPageRoute(builder: (context) => Mapscreen()));
                                                         },
                                                       )
                                                     ],
